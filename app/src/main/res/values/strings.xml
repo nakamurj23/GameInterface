@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">GameInterfaceGUIDraft</string>
+    <string-array name="difficulty">
+        <item>Difficulty</item>
+        <item>Easy</item>
+        <item>Medium</item>
+        <item>Hard</item>
+    </string-array>
+</resources>
