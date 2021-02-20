@@ -86,10 +86,8 @@ public class BoardView extends SurfaceView {
 
     //draws the number of marbles
     public void drawPitMarblesNumber(float cx, float cy, int numMarbles, Canvas canvas){
-        for(int i = 0; i < numMarbles; i++) {
-            String numStr = new Integer(numMarbles).toString();
-            drawMarblesNumber(cx, cy, numStr, canvas);
-        }
+        String numStr = new Integer(numMarbles).toString();
+        drawMarblesNumber(cx, cy, numStr, canvas);
     }
 
     //draw the number
