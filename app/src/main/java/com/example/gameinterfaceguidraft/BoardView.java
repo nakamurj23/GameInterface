@@ -35,6 +35,7 @@ public class BoardView extends SurfaceView {
     Paint brown = new Paint();
     Paint lightBrown = new Paint();
     Paint lightBlue = new Paint();
+    Paint number = new Paint();
 
 
 
@@ -47,6 +48,8 @@ public class BoardView extends SurfaceView {
         brown.setColor(Color.rgb(117,65,45));
         lightBrown.setColor(Color.rgb(205,133,63));
         lightBlue.setColor(Color.rgb(74,164,176));
+        number.setColor(Color.BLACK);
+        number.setTextSize(35);
 
 
     }
@@ -81,6 +84,19 @@ public class BoardView extends SurfaceView {
         }
     }
 
+    //draws the number of marbles
+    public void drawPitMarblesNumber(float cx, float cy, int numMarbles, Canvas canvas){
+        for(int i = 0; i < numMarbles; i++) {
+            String numStr = new Integer(numMarbles).toString();
+            drawMarblesNumber(cx, cy, numStr, canvas);
+        }
+    }
+
+    //draw the number
+    public void drawMarblesNumber(float cx, float cy, String numberStr, Canvas canvas){
+        canvas.drawText(numberStr, cx, cy, number);
+    }
+
     public void onDraw(Canvas canvas){
         float width = canvas.getWidth();
         float height = canvas.getHeight();
@@ -97,5 +113,8 @@ public class BoardView extends SurfaceView {
 
         drawPitMarbles(cxRightStore, cyRightStore, 15, canvas);
         drawStoreMarbles(cxLeftStore, cyLeftStore, 25, canvas);
+        drawPitMarblesNumber(cxRightStore + 50, cyRightStore, 15, canvas);
+        drawPitMarblesNumber(cxLeftStore - 120, cyLeftStore, 25, canvas);
     }
+
 }
