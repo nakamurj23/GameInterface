@@ -11,9 +11,7 @@ public class BoardView extends SurfaceView {
     // pocket circle radius
     float radius = 90f;
 
-    // pocket circle paints
-    Paint black = new Paint();
-    Paint lightBrown = new Paint();
+
 
     //measurements of board
     float boardWidth = 1780.0f;
@@ -36,6 +34,27 @@ public class BoardView extends SurfaceView {
     float cyRightStore = ((boardOutterTop+(boardHeight/10))+boardOutterBottom-(boardHeight/10))/2;
 
     //centers of Pits
+    //Player A is the bottom row Player B is top row
+    //Position A1 is the left bottom, position A6 is bottom right
+    //Position B1 is top right, position B6 is top left
+    float cxA1 = 363.78f + radius + (0*(1487.1f/7f));
+    float cxA2 = 363.78f + radius + (1*(1487.1f/7f));
+    float cxA3 = 363.78f + radius + (2*(1487.1f/7f));
+    float cxA4 = 363.78f + radius + (3*(1487.1f/7f));
+    float cxA5 = 363.78f + radius + (4*(1487.1f/7f));
+    float cxA6 = 363.78f + radius + (5*(1487.1f/7f));
+    //y for all of the A pockets
+    float cyA = ovalBottom - radius;
+
+    float cxB1 = 363.78f + radius + (5 * (1487.1f/7f));
+    float cxB2 = 363.78f + radius + (4 * (1487.1f/7f));
+    float cxB3 = 363.78f + radius + (3 * (1487.1f/7f));
+    float cxB4 = 363.78f + radius + (2 * (1487.1f/7f));
+    float cxB5 = 363.78f + radius + (1 * (1487.1f/7f));
+    float cxB6 = 363.78f + radius + (0 * (1487.1f/7f));
+    //y for all of the B pockets
+    float cyB = ovalTop + radius;
+
 
     //colors
     Paint black = new Paint();
@@ -145,10 +164,24 @@ public class BoardView extends SurfaceView {
             float cyBottom = ovalBottom - radius;
             drawPocket(canvas, cxBottom, cyBottom, radius);
         }
-        drawPitMarbles(cxRightStore, cyRightStore, 15, canvas);
-        drawStoreMarbles(cxLeftStore, cyLeftStore, 25, canvas);
-        drawPitMarblesNumber(cxRightStore + 50, cyRightStore, 15, canvas);
-        drawPitMarblesNumber(cxLeftStore - 120, cyLeftStore, 25, canvas);
+        //draw pit marbles for player A
+        drawPitMarbles(cxA1, cyA, 6, canvas);
+        drawPitMarbles(cxA3, cyA, 3, canvas);
+        drawPitMarbles(cxA4, cyA, 7, canvas);
+        drawPitMarbles(cxA5, cyA, 7, canvas);
+
+        //draw pit marbles for player B
+        drawPitMarbles(cxB5, cyB, 7, canvas);
+        drawPitMarbles(cxB4, cyB, 3, canvas);
+
+        //store marbles for player A
+        drawStoreMarbles(cxRightStore, cyRightStore, 3, canvas);
+
+        //store marbles for player B
+        drawStoreMarbles(cxLeftStore, cyLeftStore, 6, canvas);
+
+        drawPitMarblesNumber(cxRightStore + 50, cyRightStore, 3, canvas);
+        drawPitMarblesNumber(cxLeftStore - 120, cyLeftStore, 6, canvas);
 
     }
 
