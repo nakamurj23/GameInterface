@@ -74,8 +74,8 @@ public class BoardView extends SurfaceView {
         brown.setColor(Color.rgb(117,65,45));
         lightBrown.setColor(Color.rgb(205,133,63));
         lightBlue.setColor(Color.rgb(74,164,176));
-        number.setColor(Color.BLACK);
-        number.setTextSize(35);
+        number.setColor(Color.WHITE);
+        number.setTextSize(45);
 
 
     }
@@ -88,18 +88,28 @@ public class BoardView extends SurfaceView {
 
     //draws marbles for each pit
     //all same distance from center of pit
-    public void drawPitMarbles(float cx, float cy, int numMarbles, Canvas canvas) {
+    public void drawPitMarbles(float cx, float cy, int numMarbles, Canvas canvas, boolean isTopRow) {
         float radius = 50.0f;
         double angle = 0.0;
         for(int i = 0; i < numMarbles; i++) {
             drawMarble((float) (cx + radius*Math.cos(angle)), (float) (cy + radius*Math.sin(angle)), canvas);
             angle += 2*Math.PI/numMarbles;
         }
+
+        //draw number of marbles for the pits
+        float cxNum = cx;
+        float cyNum = 0;
+        if(isTopRow){
+            cyNum = cy + 120;
+        } else{
+            cyNum = cy - 95;
+        }
+        drawMarblesNumber(cxNum, cyNum, numMarbles, canvas);
     }
 
     //spreads marbles out more since more marbles will be in the 2 stores at either end
     //uses random arrangement instead of circular
-    public void drawStoreMarbles(float cx, float cy, int numMarbles, Canvas canvas) {
+    public void drawStoreMarbles(float cx, float cy, int numMarbles, Canvas canvas, boolean isLeft) {
         float radius = 80.0f;
         double angle = 0.0;
         for(int i = 0; i < numMarbles; i++) {
@@ -108,16 +118,21 @@ public class BoardView extends SurfaceView {
             drawMarble(centerx,centery,canvas);
             angle += 2*Math.PI/(Math.random()*15);
         }
-    }
 
-    //draws the number of marbles
-    public void drawPitMarblesNumber(float cx, float cy, int numMarbles, Canvas canvas){
-        String numStr = new Integer(numMarbles).toString();
-        drawMarblesNumber(cx, cy, numStr, canvas);
+        //draw the number of marbles for the store
+        float cxNum = 0;
+        float cyNum = cy;
+        if(isLeft){
+            cxNum = cx - 130;
+        } else{
+            cxNum = cx + 115;
+        }
+        drawMarblesNumber(cxNum, cyNum, numMarbles, canvas);
     }
 
     //draw the number
-    public void drawMarblesNumber(float cx, float cy, String numberStr, Canvas canvas){
+    public void drawMarblesNumber(float cx, float cy, int numMarbles, Canvas canvas){
+        String numberStr = new Integer(numMarbles).toString();
         canvas.drawText(numberStr, cx, cy, number);
     }
   
@@ -165,23 +180,27 @@ public class BoardView extends SurfaceView {
             drawPocket(canvas, cxBottom, cyBottom, radius);
         }
         //draw pit marbles for player A
-        drawPitMarbles(cxA1, cyA, 6, canvas);
-        drawPitMarbles(cxA3, cyA, 3, canvas);
-        drawPitMarbles(cxA4, cyA, 7, canvas);
-        drawPitMarbles(cxA5, cyA, 7, canvas);
+        drawPitMarbles(cxA1, cyA, 6, canvas, true);
+        drawPitMarbles(cxA2, cyA, 0, canvas, true);
+        drawPitMarbles(cxA3, cyA, 3, canvas, true);
+        drawPitMarbles(cxA4, cyA, 7, canvas, true);
+        drawPitMarbles(cxA5, cyA, 7, canvas, true);
+        drawPitMarbles(cxA6, cyA, 0, canvas, true);
 
         //draw pit marbles for player B
-        drawPitMarbles(cxB5, cyB, 7, canvas);
-        drawPitMarbles(cxB4, cyB, 3, canvas);
+        drawPitMarbles(cxB6, cyB, 0, canvas, false);
+        drawPitMarbles(cxB5, cyB, 7, canvas, false);
+        drawPitMarbles(cxB4, cyB, 3, canvas,false);
+        drawPitMarbles(cxB3, cyB, 0, canvas,false);
+        drawPitMarbles(cxB2, cyB, 0, canvas,false);
+        drawPitMarbles(cxB1, cyB, 0, canvas,false);
 
         //store marbles for player A
-        drawStoreMarbles(cxRightStore, cyRightStore, 3, canvas);
+        drawStoreMarbles(cxRightStore, cyRightStore, 3, canvas, false);
 
         //store marbles for player B
-        drawStoreMarbles(cxLeftStore, cyLeftStore, 6, canvas);
+        drawStoreMarbles(cxLeftStore, cyLeftStore, 6, canvas, true);
 
-        drawPitMarblesNumber(cxRightStore + 50, cyRightStore, 3, canvas);
-        drawPitMarblesNumber(cxLeftStore - 120, cyLeftStore, 6, canvas);
 
     }
 
