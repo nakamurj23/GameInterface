@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">GameInterfaceGUIDraft</string>
+    <string name="mancala">Mancala</string>
     <string-array name="difficulty">
         <item>Difficulty</item>
         <item>Easy</item>

@@ -26,6 +26,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
+                    app:layout_constraintTop_toTopOf="parent"
                     tools:layout_editor_absoluteX="48dp">
 
                     <TextView
@@ -33,7 +34,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
-                        android:text="Mancala"
+                        android:text="@string/mancala"
                         android:textSize="50sp" />
                 </LinearLayout>
 
@@ -41,14 +42,15 @@
                     android:id="@+id/DifficultyLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="right"
-                    android:orientation="horizontal">
+                    android:gravity="end"
+                    android:orientation="horizontal"
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <Spinner
                         android:id="@+id/difficulty"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="right" />
+                        android:gravity="end" />
 
                 </LinearLayout>
 
