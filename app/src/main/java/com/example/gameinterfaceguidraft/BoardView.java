@@ -55,6 +55,12 @@ public class BoardView extends SurfaceView {
     //y for all of the B pockets
     float cyB = ovalTop + radius;
 
+    //coordinates for text
+    float textCxLeftStore = (boardInnerLeft + boardOutterLeft+(boardWidth/45))/2;
+    float textCxRightStore = (boardInnerRight + boardOutterRight-(boardWidth/45))/2;
+    float textCyTopRow = boardInnerTop + (3*(ovalTop-boardInnerTop)/4);
+    float textCyBottomRow = boardInnerBottom - ((boardInnerBottom-ovalBottom)/4);
+
 
     //colors
     Paint black = new Paint();
@@ -62,6 +68,7 @@ public class BoardView extends SurfaceView {
     Paint lightBrown = new Paint();
     Paint lightBlue = new Paint();
     Paint number = new Paint();
+    Paint text = new Paint();
 
 
 
@@ -74,9 +81,12 @@ public class BoardView extends SurfaceView {
         brown.setColor(Color.rgb(117,65,45));
         lightBrown.setColor(Color.rgb(205,133,63));
         lightBlue.setColor(Color.rgb(74,164,176));
-        number.setColor(Color.WHITE);
-        number.setTextSize(45);
-
+        number.setColor(Color.BLACK);
+        number.setTextAlign(Paint.Align.CENTER);
+        number.setTextSize(28);
+        text.setColor(Color.BLACK);
+        text.setTextAlign(Paint.Align.CENTER);
+        text.setTextSize(50);
 
     }
 
@@ -97,14 +107,12 @@ public class BoardView extends SurfaceView {
         }
 
         //draw number of marbles for the pits
-        float cxNum = cx;
-        float cyNum = 0;
         if(isTopRow){
-            cyNum = cy + 120;
+            drawMarblesNumber(cx, textCyTopRow, numMarbles, canvas);
         } else{
-            cyNum = cy - 95;
+            drawMarblesNumber(cx,textCyBottomRow , numMarbles, canvas);
         }
-        drawMarblesNumber(cxNum, cyNum, numMarbles, canvas);
+
     }
 
     //spreads marbles out more since more marbles will be in the 2 stores at either end
@@ -120,14 +128,11 @@ public class BoardView extends SurfaceView {
         }
 
         //draw the number of marbles for the store
-        float cxNum = 0;
-        float cyNum = cy;
         if(isLeft){
-            cxNum = cx - 130;
+            drawMarblesNumber(textCxLeftStore,cy, numMarbles, canvas);
         } else{
-            cxNum = cx + 115;
+            drawMarblesNumber(textCxRightStore,cy, numMarbles, canvas);
         }
-        drawMarblesNumber(cxNum, cyNum, numMarbles, canvas);
     }
 
     //draw the number
@@ -145,6 +150,15 @@ public class BoardView extends SurfaceView {
         // Inner circle
         lightBrown.setColor(Color.rgb(205,133,63));
         canvas.drawCircle(cx ,cy, radius - 5, lightBrown);
+    }
+
+    public void drawTurnName(Canvas canvas, boolean isComputersTurn) {
+        if (isComputersTurn) {
+            canvas.drawText("Computer's Turn", boardOutterLeft + boardWidth/2, boardOutterBottom + 100, text);
+        }
+        else {
+            canvas.drawText("Your Turn", boardOutterLeft + boardWidth/2, boardOutterBottom + 100, text);
+        }
     }
 
     /** onDraw method draws the game board and pockets. */
@@ -180,26 +194,29 @@ public class BoardView extends SurfaceView {
             drawPocket(canvas, cxBottom, cyBottom, radius);
         }
         //draw pit marbles for player A
-        drawPitMarbles(cxA1, cyA, 6, canvas, true);
-        drawPitMarbles(cxA2, cyA, 0, canvas, true);
-        drawPitMarbles(cxA3, cyA, 3, canvas, true);
-        drawPitMarbles(cxA4, cyA, 7, canvas, true);
-        drawPitMarbles(cxA5, cyA, 7, canvas, true);
-        drawPitMarbles(cxA6, cyA, 0, canvas, true);
+        drawPitMarbles(cxA1, cyA, 6, canvas, false);
+        drawPitMarbles(cxA2, cyA, 0, canvas, false);
+        drawPitMarbles(cxA3, cyA, 3, canvas, false);
+        drawPitMarbles(cxA4, cyA, 7, canvas, false);
+        drawPitMarbles(cxA5, cyA, 7, canvas, false);
+        drawPitMarbles(cxA6, cyA, 0, canvas, false);
 
         //draw pit marbles for player B
-        drawPitMarbles(cxB6, cyB, 0, canvas, false);
-        drawPitMarbles(cxB5, cyB, 7, canvas, false);
-        drawPitMarbles(cxB4, cyB, 3, canvas,false);
-        drawPitMarbles(cxB3, cyB, 0, canvas,false);
-        drawPitMarbles(cxB2, cyB, 0, canvas,false);
-        drawPitMarbles(cxB1, cyB, 0, canvas,false);
+        drawPitMarbles(cxB6, cyB, 0, canvas, true);
+        drawPitMarbles(cxB5, cyB, 7, canvas, true);
+        drawPitMarbles(cxB4, cyB, 3, canvas,true);
+        drawPitMarbles(cxB3, cyB, 0, canvas,true);
+        drawPitMarbles(cxB2, cyB, 0, canvas,true);
+        drawPitMarbles(cxB1, cyB, 0, canvas,true);
 
         //store marbles for player A
         drawStoreMarbles(cxRightStore, cyRightStore, 3, canvas, false);
 
         //store marbles for player B
         drawStoreMarbles(cxLeftStore, cyLeftStore, 6, canvas, true);
+
+        //draw Text that says whose turn it is
+        drawTurnName(canvas, false);
 
 
     }
